@@ -2,471 +2,251 @@
 <html lang="ru">
 <head>
 <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<meta name="theme-color" content="#0a0e1a">
 <title>Трамвай №5</title>
 <style>
-  * { margin: 0; padding: 0; box-sizing: border-box; }
+  * { margin: 0; padding: 0; box-sizing: border-box; -webkit-tap-highlight-color: transparent; }
+
+  html, body {
+    width: 100%;
+    min-height: 100vh;
+    overflow-x: hidden;
+    background: #0a0e1a;
+  }
+
   body {
     font-family: 'Courier New', monospace;
-    background: #0a0e1a;
     color: #e0e6f0;
-    min-height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
-    padding: 20px;
-    overflow-x: hidden;
     position: relative;
+    padding-top: env(safe-area-inset-top);
+    padding-bottom: env(safe-area-inset-bottom);
   }
+
   body::before {
     content: '';
     position: fixed;
     inset: 0;
     background:
-      radial-gradient(circle at 20% 30%, rgba(0, 200, 200, 0.12), transparent 40%),
-      radial-gradient(circle at 80% 70%, rgba(255, 200, 100, 0.08), transparent 40%),
-      radial-gradient(circle at 50% 90%, rgba(100, 100, 255, 0.08), transparent 50%);
+      radial-gradient(circle at 20% 30%, rgba(0, 200, 200, 0.18), transparent 45%),
+      radial-gradient(circle at 80% 70%, rgba(255, 200, 100, 0.12), transparent 45%),
+      radial-gradient(circle at 50% 90%, rgba(100, 100, 255, 0.12), transparent 50%);
     animation: flicker 6s infinite alternate;
-    pointer-events: none;
     z-index: 0;
+    pointer-events: none;
   }
+
   @keyframes flicker {
-    0% { opacity: 0.5; }
+    0% { opacity: 0.6; }
     50% { opacity: 1; }
-    100% { opacity: 0.6; }
+    100% { opacity: 0.7; }
   }
+
   .container {
     position: relative;
-    z-index: 1;
-    max-width: 560px;
+    z-index: 2;
     width: 100%;
-    background: rgba(10, 15, 30, 0.88);
-    border: 1px solid rgba(77, 208, 225, 0.25);
-    border-radius: 20px;
-    padding: 45px 35px;
-    backdrop-filter: blur(12px);
-    box-shadow: 0 0 60px rgba(0, 200, 200, 0.12);
+    min-height: 100vh;
+    min-height: 100dvh;
+    background: rgba(10, 15, 30, 0.85);
+    backdrop-filter: blur(10px);
+    -webkit-backdrop-filter: blur(10px);
+    padding: 60px 22px 50px;
     text-align: center;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
     animation: appear 1s ease-out;
-    transition: box-shadow 0.3s ease, border-color 0.3s ease;
   }
+
   @keyframes appear {
     from { opacity: 0; transform: translateY(20px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .container.danger {
-    border-color: #ff3b3b;
-    box-shadow: 0 0 80px rgba(255, 59, 59, 0.8), inset 0 0 40px rgba(255, 59, 59, 0.15);
-  }
-  .screen { display: none; }
-  .screen.active { display: block; animation: fadeIn 0.7s ease-out; }
+
+  .screen { display: none; animation: fadeIn 0.8s ease-out; }
+  .screen.active { display: block; }
+
   @keyframes fadeIn {
-    from { opacity: 0; transform: translateY(12px); }
+    from { opacity: 0; transform: translateY(10px); }
     to { opacity: 1; transform: translateY(0); }
   }
-  .icon {
-    font-size: 3em;
-    margin-bottom: 15px;
-    display: inline-block;
-    animation: sway 3s ease-in-out infinite;
-  }
-  @keyframes sway {
-    0%, 100% { transform: translateX(-6px); }
-    50% { transform: translateX(6px); }
-  }
+
   h1 {
-    font-size: 1.3em;
+    font-size: 1.45em;
     color: #4dd0e1;
-    margin-bottom: 25px;
-    letter-spacing: 2px;
-    text-shadow: 0 0 20px rgba(77, 208, 225, 0.5);
-    font-weight: normal;
+    margin-bottom: 22px;
+    letter-spacing: 1.5px;
+    text-shadow: 0 0 15px rgba(77, 208, 225, 0.5);
+    line-height: 1.3;
   }
+
   p {
-    font-size: 0.98em;
-    line-height: 1.75;
-    color: #b8c2d4;
+    font-size: 1em;
+    line-height: 1.65;
+    color: #c0c8d8;
     margin-bottom: 18px;
   }
-  .accent {
-    color: #4dd0e1;
-    font-size: 1.05em;
-    margin: 25px 0;
-    text-shadow: 0 0 15px rgba(77, 208, 225, 0.4);
+
+  .quote {
+    font-style: italic;
+    color: #ffd54f;
+    border-left: 3px solid #ffd54f;
+    padding-left: 15px;
+    text-align: left;
+    margin: 24px 0;
+    font-size: 0.95em;
+    line-height: 1.6;
   }
-  .buttons {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 12px;
-    margin: 10px 0;
-  }
+
   .btn {
-    display: inline-block;
+    display: block;
+    width: 100%;
+    max-width: 340px;
+    margin: 12px auto;
     background: transparent;
     border: 2px solid #4dd0e1;
     color: #4dd0e1;
-    padding: 13px 28px;
+    padding: 16px 20px;
     font-family: 'Courier New', monospace;
-    font-size: 0.95em;
+    font-size: 1.05em;
     letter-spacing: 1px;
     cursor: pointer;
-    border-radius: 10px;
+    border-radius: 12px;
     transition: all 0.3s ease;
     text-decoration: none;
+    text-align: center;
   }
-  .btn:hover {
+
+  .btn:hover, .btn:active {
     background: #4dd0e1;
     color: #0a0e1a;
-    box-shadow: 0 0 30px rgba(77, 208, 225, 0.6);
+    box-shadow: 0 0 25px rgba(77, 208, 225, 0.6);
     transform: translateY(-2px);
   }
-  .btn-gold { border-color: #ffd54f; color: #ffd54f; }
-  .btn-gold:hover { background: #ffd54f; color: #0a0e1a; }
-  .btn-dim { border-color: #55607a; color: #7a8299; }
-  .btn-dim:hover { background: #55607a; color: #e0e6f0; }
-  .small {
-    font-size: 0.82em;
-    color: #6a7288;
-    margin-top: 20px;
-    line-height: 1.6;
+
+  .btn-gold {
+    border-color: #ffd54f;
+    color: #ffd54f;
   }
+
+  .btn-gold:hover, .btn-gold:active {
+    background: #ffd54f;
+    color: #0a0e1a;
+    box-shadow: 0 0 25px rgba(255, 213, 79, 0.6);
+  }
+
   .hearts {
     position: fixed;
     top: -10px;
-    font-size: 24px;
+    font-size: 26px;
     animation: fall linear forwards;
     z-index: 10;
     pointer-events: none;
   }
+
   @keyframes fall {
     to { transform: translateY(110vh) rotate(360deg); opacity: 0; }
   }
 
-  /* === ИГРА === */
-  #gameArea {
-    position: relative;
-    width: 100%;
-    height: 380px;
-    background: rgba(0, 0, 0, 0.35);
-    border: 1px solid rgba(77, 208, 225, 0.2);
-    border-radius: 14px;
-    overflow: hidden;
-    margin: 15px 0;
-    cursor: none;
-  }
-  #basket {
-    position: absolute;
-    bottom: 10px;
-    font-size: 2.4em;
-    transition: left 0.05s linear;
-    user-select: none;
-    z-index: 2;
-  }
-  .falling {
-    position: absolute;
-    font-size: 1.8em;
-    user-select: none;
-    z-index: 1;
-  }
-  .score {
-    font-size: 0.95em;
-    color: #ffd54f;
-    margin-bottom: 5px;
-    letter-spacing: 1px;
-  }
-  .lives {
-    font-size: 1.1em;
-    margin-bottom: 8px;
-    letter-spacing: 3px;
-  }
-  .game-hint {
-    font-size: 0.8em;
-    color: #6a7288;
-    margin-top: 5px;
-  }
-  .win-msg {
-    color: #4dd0e1;
-    font-size: 1.1em;
-    margin: 15px 0;
-    text-shadow: 0 0 15px rgba(77, 208, 225, 0.5);
+  .tram-icon {
+    font-size: 3.2em;
+    margin-bottom: 14px;
+    animation: sway 3s ease-in-out infinite;
   }
 
-  /* === ОВЕРЛЕЙ ПРОИГРЫША === */
-  #loseOverlay {
-    position: fixed;
-    inset: 0;
-    background: rgba(10, 0, 0, 0.92);
-    display: none;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    z-index: 100;
-    padding: 30px;
-    text-align: center;
-    animation: fadeIn 0.4s ease-out;
+  @keyframes sway {
+    0%, 100% { transform: translateX(-6px); }
+    50% { transform: translateX(6px); }
   }
-  #loseOverlay.show { display: flex; }
-  #loseOverlay h2 {
-    font-size: 1.8em;
-    color: #ff3b3b;
-    margin-bottom: 20px;
-    text-shadow: 0 0 30px rgba(255, 59, 59, 0.8);
-    line-height: 1.4;
-    font-weight: normal;
+
+  .small {
+    font-size: 0.85em;
+    color: #7a8299;
+    margin-top: 22px;
+    line-height: 1.5;
   }
-  #loseOverlay p {
-    font-size: 1.1em;
-    color: #ffb3b3;
-    margin-bottom: 25px;
-  }
-  #loseOverlay .bonus {
-    font-size: 1.3em;
-    color: #ff6b9d;
-    margin: 20px 0;
-    text-shadow: 0 0 20px rgba(255, 107, 157, 0.7);
+
+  @media (max-width: 400px) {
+    h1 { font-size: 1.25em; }
+    p { font-size: 0.95em; }
+    .container { padding: 50px 16px 40px; }
   }
 </style>
 </head>
 <body>
 
-<div class="container" id="mainContainer">
-
-  <!-- ЭКРАН 0: ИГРА -->
-  <div class="screen active" id="screen0">
-    <div class="icon">🎟️</div>
-    <h1>Поймай билеты</h1>
-    
-    <div class="lives">Жизни: <span id="lives">❤️❤️❤️</span></div>
-    <div class="score">Поймано: <span id="score">0</span> / 10</div>
-    <div id="gameArea">
-      <div id="basket">🧺</div>
-    </div>
-    
-
-    <div id="winBox" style="display:none;">
-      <p class="win-msg">🎫 Все билеты собраны!</p>
-      <button class="btn btn-gold" onclick="showScreen(1)">Открыть маршрут трамвая</button>
-    </div>
-  </div>
+<div class="container">
 
   <!-- ЭКРАН 1 -->
-  <div class="screen" id="screen1">
-    <div class="icon">🚋</div>
-    <h1>Остановка «Проспект Победы»</h1>
-    <p>Ночная Казань. На остановке стоит трамвай №5.</p>
-    <p>Двери открыты.</p>
-    <button class="btn" onclick="showScreen(2)">Заглянуть внутрь</button>
+  <div class="screen active" id="screen1">
+    <div class="tram-icon">🚋</div>
+    <h1>ОСТАНОВКА «ПРОСПЕКТ ПОБЕДЫ»</h1>
+    <p>Ночная Казань. На остановке стоит трамвай №5. Двери открыты. Внутри — пусто, только мерцает свет и лежат наушники.</p>
+    <p>Ты заходишь. Двери закрываются.</p>
+    <div class="quote">
+      «Этот трамвай едет не по маршруту. Он едет по твоей истории. Готова узнать, куда он тебя приведёт?»
+    </div>
+    <button class="btn" onclick="showScreen(2)">Я готова</button>
   </div>
 
   <!-- ЭКРАН 2 -->
   <div class="screen" id="screen2">
-    <div class="icon">🎧</div>
+    <div class="tram-icon">🎧</div>
+    <h1>ГОЛОС В НАУШНИКАХ</h1>
     <p>«У тебя есть выбор. Как ты проведёшь этот вечер?»</p>
-    <div class="buttons">
-      <button class="btn btn-dim" onclick="wrongChoice()">Буду дома смотреть сериал</button>
-      <button class="btn btn-gold" onclick="showScreen(3)">Поеду на спектакль в трамвае</button>
-    </div>
+    <button class="btn" onclick="wrongChoice()">Буду дома смотреть сериал</button>
+    <button class="btn btn-gold" onclick="showScreen(3)">Поеду на спектакль в трамвае</button>
     <p class="small" id="wrongMsg"></p>
-    <p class="accent">9 октября, пятница, 23:00.</p>
   </div>
 
   <!-- ЭКРАН 3 -->
   <div class="screen" id="screen3">
-    <div class="icon">✨</div>
-    <h1>Конечная</h1>
-    <p>Трамвай останавливается. За окном — огни ночной Казани.</p>
-    <p class="accent">Я беру место 2.<br>Ты возьмёшь место 3?</p>
-    <div class="buttons">
-      <a href="https://tickets.kazan-tuz.ru/event/?id=7120" target="_blank" class="btn btn-gold">Взять место 3</a>
-      <button class="btn" onclick="celebrate()">Я в деле</button>
+    <div class="tram-icon">✨</div>
+    <h1>КОНЕЧНАЯ</h1>
+    <p>Трамвай останавливается. За окном — огни ночной Казани. Голос в наушниках:</p>
+    <div class="quote">
+      «Ты выбрала правильный маршрут. 25 сентября, 23:00. Трамвай №5 ждёт.»
     </div>
-    <p class="small">P.S. У нас двоих есть Пушкинские карты. Значит, судьба уже всё оплатила. Осталось только выбрать место.</p>
+    <p>У нас двоих есть Пушкинские карты. Это значит, что судьба уже оплатила нам этот вечер. Осталось только выбрать дату и место.</p>
+    <p><strong style="color:#4dd0e1;">Я возьму билет на 25-е. Ты возьмёшь рядом?</strong></p>
+    <a href="https://kazan-tuz.ru" target="_blank" class="btn btn-gold">Взять билет рядом</a>
+    <button class="btn" onclick="celebrate()">Я в деле</button>
+    <p class="small">P.S. Наушники внутри трамвая создают полный эффект присутствия. Это будет не просто спектакль — это путешествие.</p>
   </div>
-</div>
 
-<!-- ОВЕРЛЕЙ ПРОИГРЫША -->
-<div id="loseOverlay">
-  <h2>💔 Не разбивай мне сердце,<br>я же тебя люблю...</h2>
-  <p>Но я дам тебе ещё одно.</p>
-  <p class="bonus">+1 ❤️</p>
-  <button class="btn btn-gold" onclick="continueAfterLose()">Продолжить</button>
 </div>
 
 <script>
-/* === Переключение экранов === */
-function showScreen(num) {
-  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
-  document.getElementById('screen' + num).classList.add('active');
-}
-
-function wrongChoice() {
-  const msg = document.getElementById('wrongMsg');
-  msg.textContent = 'Неверный маршрут. Трамвай сворачивает на улицу Сожаления... Попробуй ещё раз пж';
-  msg.style.color = '#ff7a7a';
-  setTimeout(() => { msg.textContent = ''; }, 3500);
-}
-
-function celebrate() {
-  const emojis = ['❤️', '✨', '🎭', '🚋', '💫'];
-  for (let i = 0; i < 40; i++) {
-    setTimeout(() => {
-      const heart = document.createElement('div');
-      heart.className = 'hearts';
-      heart.textContent = emojis[Math.floor(Math.random() * emojis.length)];
-      heart.style.left = Math.random() * 100 + 'vw';
-      heart.style.fontSize = (Math.random() * 14 + 18) + 'px';
-      heart.style.animationDuration = (Math.random() * 2 + 2.5) + 's';
-      document.body.appendChild(heart);
-      setTimeout(() => heart.remove(), 5000);
-    }, i * 90);
-  }
-}
-
-/* === Мини-игра === */
-const gameArea = document.getElementById('gameArea');
-const basket = document.getElementById('basket');
-const scoreEl = document.getElementById('score');
-const livesEl = document.getElementById('lives');
-const winBox = document.getElementById('winBox');
-const container = document.getElementById('mainContainer');
-const loseOverlay = document.getElementById('loseOverlay');
-
-let score = 0;
-let lives = 3;
-const TARGET = 10;
-let gameRunning = false;
-let spawnInterval, moveInterval;
-
-function startGame() {
-  if (gameRunning) return;
-  gameRunning = true;
-  score = 0;
-  scoreEl.textContent = 0;
-  updateLives();
-  winBox.style.display = 'none';
-  gameArea.querySelectorAll('.falling').forEach(t => t.remove());
-  basket.style.left = (gameArea.clientWidth / 2 - 20) + 'px';
-
-  spawnInterval = setInterval(spawnItem, 1400);
-  moveInterval = setInterval(moveItems, 30);
-}
-
-function spawnItem() {
-  if (!gameRunning) return;
-  const item = document.createElement('div');
-  item.className = 'falling';
-
-  // 70% билет, 30% сердце
-  if (Math.random() < 0.7) {
-    item.textContent = '🎫';
-    item.dataset.type = 'good';
-  } else {
-    item.textContent = '💔';
-    item.dataset.type = 'bad';
+  function showScreen(num) {
+    document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+    document.getElementById('screen' + num).classList.add('active');
+    window.scrollTo({ top: 0, behavior: 'smooth' });
   }
 
-  item.style.left = Math.random() * (gameArea.clientWidth - 40) + 'px';
-  item.style.top = '-40px';
-  item.dataset.speed = (Math.random() * 1.2 + 1.8).toFixed(2);
-  gameArea.appendChild(item);
-}
+  function wrongChoice() {
+    const msg = document.getElementById('wrongMsg');
+    msg.textContent = 'Неверный маршрут. Трамвай сворачивает на улицу Сожаления... Попробуй ещё раз 😄';
+    setTimeout(() => { msg.textContent = ''; }, 3000);
+  }
 
-function moveItems() {
-  if (!gameRunning) return;
-  const items = gameArea.querySelectorAll('.falling');
-  const basketRect = basket.getBoundingClientRect();
-
-  items.forEach(t => {
-    let top = parseFloat(t.style.top) || 0;
-    top += parseFloat(t.dataset.speed);
-    t.style.top = top + 'px';
-
-    const tRect = t.getBoundingClientRect();
-
-    // Поймали
-    if (
-      tRect.bottom >= basketRect.top &&
-      tRect.top <= basketRect.bottom &&
-      tRect.right >= basketRect.left &&
-      tRect.left <= basketRect.right
-    ) {
-      if (t.dataset.type === 'good') {
-        score++;
-        scoreEl.textContent = score;
-        if (score >= TARGET) winGame();
-      } else {
-        lives--;
-        updateLives();
-        flashDanger();
-        if (lives <= 0) loseGame();
-      }
-      t.remove();
-      return;
+  function celebrate() {
+    for (let i = 0; i < 30; i++) {
+      setTimeout(() => {
+        const heart = document.createElement('div');
+        heart.className = 'hearts';
+        heart.textContent = ['❤️', '✨', '🎭', '🚋', '💫'][Math.floor(Math.random() * 5)];
+        heart.style.left = Math.random() * 100 + 'vw';
+        heart.style.animationDuration = (Math.random() * 2 + 2) + 's';
+        document.body.appendChild(heart);
+        setTimeout(() => heart.remove(), 4000);
+      }, i * 100);
     }
-
-    // Упал мимо — ничего не теряем
-    if (top > gameArea.clientHeight) {
-      t.remove();
-    }
-  });
-}
-
-function updateLives() {
-  let str = '';
-  for (let i = 0; i < lives; i++) str += '❤️';
-  if (lives <= 0) str = '🖤';
-  livesEl.textContent = str;
-}
-
-function flashDanger() {
-  container.classList.add('danger');
-  setTimeout(() => container.classList.remove('danger'), 500);
-}
-
-function winGame() {
-  gameRunning = false;
-  clearInterval(spawnInterval);
-  clearInterval(moveInterval);
-  gameArea.querySelectorAll('.falling').forEach(t => t.remove());
-  winBox.style.display = 'block';
-}
-
-function loseGame() {
-  gameRunning = false;
-  clearInterval(spawnInterval);
-  clearInterval(moveInterval);
-  gameArea.querySelectorAll('.falling').forEach(t => t.remove());
-  loseOverlay.classList.add('show');
-}
-
-function continueAfterLose() {
-  loseOverlay.classList.remove('show');
-  // Добавляем сердечко и продолжаем
-  lives += 1;
-  updateLives();
-  gameRunning = true;
-  spawnInterval = setInterval(spawnItem, 1400);
-  moveInterval = setInterval(moveItems, 30);
-}
-
-/* Управление корзиной */
-gameArea.addEventListener('mousemove', (e) => {
-  const rect = gameArea.getBoundingClientRect();
-  let x = e.clientX - rect.left - basket.offsetWidth / 2;
-  x = Math.max(0, Math.min(x, gameArea.clientWidth - basket.offsetWidth));
-  basket.style.left = x + 'px';
-});
-
-gameArea.addEventListener('touchmove', (e) => {
-  e.preventDefault();
-  const rect = gameArea.getBoundingClientRect();
-  const touch = e.touches[0];
-  let x = touch.clientX - rect.left - basket.offsetWidth / 2;
-  x = Math.max(0, Math.min(x, gameArea.clientWidth - basket.offsetWidth));
-  basket.style.left = x + 'px';
-}, { passive: false });
-
-window.addEventListener('load', startGame);
+  }
 </script>
 
 </body>
